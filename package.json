@@ -24,7 +24,8 @@
   "scripts": {
     "dev": "nodemon -L",
     "tsc": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "heroku-postbuild": "npm run tsc"
   },
   "keywords": [],
   "author": "",
