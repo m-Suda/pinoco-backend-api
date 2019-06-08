@@ -9,17 +9,23 @@ export class MstUser {
         await db.connect();
 
         const sql: string = `
-            SELECT 
-                 user_id,
-                 user_name,
-                 company_id,
-                 role_id,
-                 create_user,
-                 create_date,
-                 update_user,
-                 update_date
-            FROM 
-                mst_user
+            SELECT
+                user_id
+              , user_name
+              , m_user.company_id
+              , company_name
+              , m_user.role_id
+              , role_name
+              , m_user.create_user
+              , m_user.create_date
+              , m_user.update_user
+              , m_user.update_date
+            FROM
+                mst_user m_user
+                    LEFT JOIN mst_company m_company
+                        ON m_user.company_id = m_company.company_id
+                    LEFT JOIN mst_role m_role
+                        ON m_user.role_id = m_role.role_id
             ORDER BY 
                    create_date
         `;
@@ -40,16 +46,22 @@ export class MstUser {
 
         const sql: string = `
             SELECT
-                 user_id,
-                 user_name,
-                 company_id,
-                 role_id,
-                 create_user,
-                 create_date,
-                 update_user,
-                 update_date
+                user_id
+              , user_name
+              , m_user.company_id
+              , company_name
+              , m_user.role_id
+              , role_name
+              , m_user.create_user
+              , m_user.create_date
+              , m_user.update_user
+              , m_user.update_date
             FROM
-                 mst_user
+                mst_user m_user
+                LEFT JOIN mst_company m_company
+                    ON m_user.company_id = m_company.company_id
+                LEFT JOIN mst_role m_role
+                    ON m_user.role_id = m_role.role_id
             WHERE 
                 user_id = $1
         `;

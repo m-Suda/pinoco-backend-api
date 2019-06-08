@@ -12,10 +12,10 @@ class AttendanceRoutes {
     }
 
     private config(): void {
-        this.router.get('/:userId/:year/:month', (req: express.Request, res: express.Response) => {
+        this.router.get('/month/:userId/:month', (req: express.Request, res: express.Response) => {
             AttendanceController.fetchMonthAttendance(req, res);
         });
-        this.router.get('/:userId/:year/:month/:day', (req: express.Request, res: express.Response) => {
+        this.router.get('/day/:userId/:today', (req: express.Request, res: express.Response) => {
             AttendanceController.fetchDayAttendance(req, res);
         });
         this.router.post('/arrival', validator.bodyParams, (req: express.Request, res: express.Response) => {

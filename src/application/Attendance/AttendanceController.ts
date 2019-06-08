@@ -8,7 +8,7 @@ import { Attendance } from "../../models/Attendance";
 export class AttendanceController {
     public static async fetchMonthAttendance(req: Request, res: Response) {
         try {
-            const result = await AttendanceService.fetchMonthAttendance(req.params.userId, req.params.year, req.params.month);
+            const result = await AttendanceService.fetchMonthAttendance(req.params.userId, req.params.month);
             res.status(200).send({
                 attendance: result
             });
@@ -22,7 +22,7 @@ export class AttendanceController {
 
     public static async fetchDayAttendance(req: Request, res: Response) {
         try {
-            const result = await AttendanceService.fetchDayAttendance(req.params.userId, req.params.year, req.params.month, req.params.day);
+            const result = await AttendanceService.fetchDayAttendance(req.params.userId, req.params.today);
             res.status(200).send({
                 attendance: result[ 0 ]
             });
@@ -66,15 +66,9 @@ export class AttendanceController {
         try {
             const userId: string = await firebase.decodeIdToken(req);
             const dailyReport = req.body.dailyReport;
-            const curriculumName = req.body.curriculumName;
-            const understandingDegrees = req.body.understandingDegrees;
-            const progressDegrees = req.body.progressDegrees;
             const attendance = new Attendance({
                 userId,
                 dailyReport,
-                curriculumName,
-                understandingDegrees,
-                progressDegrees
             });
             const leavingTime = await AttendanceService.leaving(attendance);
             res.status(200).send({

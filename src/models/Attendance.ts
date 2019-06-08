@@ -1,9 +1,7 @@
 export class Attendance {
 
     userId?: string;
-    year?: string;
-    month?: string;
-    day?: string;
+    today?: string;
     attendanceTime?: string;
     leavingTime?: string;
     dailyReport?: string;
