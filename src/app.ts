@@ -4,6 +4,7 @@ import { userRoutes } from "./routes/UserRoutes";
 import { companyRoutes } from "./routes/CompanyRoutes";
 import { attendanceRoutes } from "./routes/AttendanceRoutes";
 import { roleRoutes } from "./routes/RoleRoutes";
+import { feedbackRoutes } from "./routes/FeedbackRoutes";
 import * as firebase from './firebase/firebaes';
 
 class App {
@@ -39,6 +40,7 @@ class App {
         this.app.use('/role', roleRoutes);
         this.app.use('/company', companyRoutes);
         this.app.use('/attendance', attendanceRoutes);
+        this.app.use('/feedback', feedbackRoutes);
 
         this.app.use((err, req, res, next) => {
             res.status(err.status).send({ message: err.message });

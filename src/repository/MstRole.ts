@@ -3,10 +3,15 @@ import { Role } from "../models/Role";
 
 class MstRole {
 
+    private DB: Postgres;
+    
+    constructor() {
+        this.DB = Postgres.instance;
+    }
+    
     public async selectAll() {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
           SELECT role_id,
@@ -19,18 +24,15 @@ class MstRole {
         `;
 
         try {
-            return await db.executeQuery(sql);
+            return await this.DB.execute(sql);
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async select(userRole: string) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
           SELECT role_id,
@@ -46,18 +48,15 @@ class MstRole {
         const param = [ userRole ];
 
         try {
-            return await db.executeQuery(sql, param);
+            return await this.DB.execute(sql, param);
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async insert(role: Role) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
           INSERT INTO mst_role (
@@ -82,19 +81,16 @@ class MstRole {
         ];
 
         try {
-            await db.executeQuery(sql, param);
+            await this.DB.execute(sql, param);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async update(role: Role) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql = `
             UPDATE 
@@ -113,18 +109,16 @@ class MstRole {
         ];
 
         try {
-            await db.executeQuery(sql, params);
+            await this.DB.execute(sql, params);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async delete(roleId: string) {
-        const db: Postgres = new Postgres();
-        await db.connect();
+
+        await this.DB.connect();
 
         const sql = `
             DELETE FROM 
@@ -135,15 +129,13 @@ class MstRole {
         const param = [ roleId ];
 
         try {
-            await db.executeQuery(sql, param);
+            await this.DB.execute(sql, param);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
 }
 
-export const mstUserRole = new MstRole();
+export const mstRole = new MstRole();

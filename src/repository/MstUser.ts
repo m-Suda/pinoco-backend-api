@@ -1,12 +1,17 @@
 import { Postgres } from "../database/Postgres";
 import { User } from "../models/User";
 
-export class MstUser {
+class MstUser {
 
-    public static async selectAll() {
+    private DB: Postgres;
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+    constructor() {
+        this.DB = Postgres.instance;
+    }
+
+    public async selectAll() {
+
+        await this.DB.connect();
 
         const sql: string = `
             SELECT
@@ -31,18 +36,15 @@ export class MstUser {
         `;
 
         try {
-            return await db.executeQuery(sql);
+            return await this.DB.execute(sql);
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
-    public static async select(userId: string) {
+    public async select(userId: string) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
             SELECT
@@ -68,18 +70,15 @@ export class MstUser {
         const param = [ userId ];
 
         try {
-            return await db.executeQuery(sql, param);
+            return await this.DB.execute(sql, param);
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
-    public static async insert(user: User) {
+    public async insert(user: User) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
             INSERT INTO mst_user (user_id,
@@ -102,19 +101,16 @@ export class MstUser {
         ];
 
         try {
-            await db.executeQuery(sql, params);
+            await this.DB.execute(sql, params);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
-    public static async update(user: User) {
+    public async update(user: User) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql = `
             UPDATE
@@ -137,18 +133,16 @@ export class MstUser {
         ];
 
         try {
-            await db.executeQuery(sql, params);
+            await this.DB.execute(sql, params);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
-    public static async delete(userId: string) {
-        const db: Postgres = new Postgres();
-        await db.connect();
+    public async delete(userId: string) {
+
+        await this.DB.connect();
 
         const sql: string = `
           DELETE
@@ -159,12 +153,12 @@ export class MstUser {
         const param = [ userId ];
 
         try {
-            await db.executeQuery(sql, param);
+            await this.DB.execute(sql, param);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 }
+
+export const mstUser = new MstUser();

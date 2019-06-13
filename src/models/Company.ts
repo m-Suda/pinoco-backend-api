@@ -1,7 +1,6 @@
 export class Company {
     companyId?: string;
     companyName?: string;
-    isDelete?: number;
     createUser?: string;
     updateUser?: string;
 

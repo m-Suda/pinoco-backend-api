@@ -3,19 +3,15 @@ import { Company } from "../models/Company";
 
 class MstCompany {
 
-    public readonly COLUMNS: string[] = [
-        'companyId',
-        'companyName',
-        'createDate',
-        'createUser',
-        'updateDate',
-        'updateUser',
-    ];
+    private DB: Postgres;
+
+    constructor() {
+        this.DB = Postgres.instance;
+    }
 
     public async selectAll() {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
             SELECT 
@@ -32,19 +28,16 @@ class MstCompany {
         `;
 
         try {
-            return await db.executeQuery(sql);
+            return await this.DB.execute(sql);
         } catch (e) {
             console.error(e);
             throw e;
-        } finally {
-            await db.end();
         }
     }
 
     public async select(companyId: string) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
             SELECT
@@ -62,18 +55,15 @@ class MstCompany {
         const param = [ companyId ];
 
         try {
-            return await db.executeQuery(sql, param);
+            return await this.DB.execute(sql, param);
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async insert(company: Company) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql: string = `
           INSERT INTO mst_company (company_id, company_name, create_date, create_user, update_date, update_user)
@@ -87,19 +77,16 @@ class MstCompany {
         ];
 
         try {
-            await db.executeQuery(sql, param);
+            await this.DB.execute(sql, param);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async update(company: Company) {
 
-        const db: Postgres = new Postgres();
-        await db.connect();
+        await this.DB.connect();
 
         const sql = `
             UPDATE
@@ -117,18 +104,16 @@ class MstCompany {
             company.companyId
         ];
         try {
-            await db.executeQuery(sql, params);
+            await this.DB.execute(sql, params);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 
     public async delete(companyId: string) {
-        const db: Postgres = new Postgres();
-        await db.connect();
+
+        await this.DB.connect();
 
         const sql = `
             DELETE FROM
@@ -138,12 +123,10 @@ class MstCompany {
         `;
         const param = [ companyId ];
         try {
-            await db.executeQuery(sql, param);
+            await this.DB.execute(sql, param);
             return true;
         } catch (e) {
             throw new Error(e);
-        } finally {
-            await db.end();
         }
     }
 

@@ -1,28 +1,74 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 
+/**
+ * Postgresクラス
+ *   ※Singletonパターンを使用
+ */
 export class Postgres {
 
-    private client: Client;
+    private static _instance: Postgres;
+    private pool: Pool;
 
     constructor() {
-        this.client = new Client({
+        this.pool = new Pool({
             connectionString: process.env.DATABASE_URL,
         });
     }
 
-    public async connect() {
+    /**
+     * Postgresインスタンスの取得
+     */
+    public static get instance(): Postgres {
 
-        await this.client.connect();
+        if (!this._instance) {
+            this._instance = new Postgres();
+            console.log('Initial instantiation');
+        }
+
+        return this._instance;
     }
 
-    public async executeQuery(query: string, param: any[] = []) {
-
-        return (await this.client.query(query, param)).rows;
+    /**
+     * DB接続
+     */
+    public async connect(): Promise<void> {
+        await this.pool.connect();
     }
 
-    public async end() {
-
-        await this.client.end();
+    /**
+     * DB切断
+     */
+    public async end(): Promise<void> {
+        await this.pool.end();
     }
 
+    /**
+     * クエリ実行
+     * @param query
+     * @param params
+     */
+    public async execute(query: string, params: any[] = []): Promise<any> {
+        return (await this.pool.query(query, params)).rows;
+    }
+
+    /**
+     * Transaction Begin
+     */
+    public async begin(): Promise<void> {
+        await this.pool.query('BEGIN');
+    }
+
+    /**
+     * Transaction Commit
+     */
+    public async commit(): Promise<void> {
+        await this.pool.query('COMMIT');
+    }
+
+    /**
+     * Transaction Rollback
+     */
+    public async rollback(): Promise<void> {
+        await this.pool.query('ROLLBACK');
+    }
 }

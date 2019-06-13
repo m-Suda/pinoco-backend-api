@@ -10,9 +10,9 @@ export class TrnAttendance {
         const sql: string = `
             SELECT 
                 user_id
-              , to_char(today, 'YYYY-MM-DD')
-              , attendance_time
-              , leaving_time
+              , to_char(year_month_day, 'YYYY-MM-DD')
+              , work_start_time
+              , work_end_time
               , daily_report
               , curriculum_name
               , understanding_degrees
@@ -20,8 +20,8 @@ export class TrnAttendance {
             FROM
                  trn_attendance
             WHERE user_id = $1
-            AND today BETWEEN $2 AND $3
-          ORDER BY today
+            AND year_month_day BETWEEN $2 AND $3
+          ORDER BY year_month_day
         `;
         const params: string[] = [
             userId,
@@ -45,9 +45,9 @@ export class TrnAttendance {
         const sql: string = `
             SELECT
                 user_id
-              , to_char(today, 'YYYY-MM-DD')
-              , attendance_time
-              , leaving_time
+              , to_char(year_month_day, 'YYYY-MM-DD')
+              , work_start_time
+              , work_end_time
               , daily_report
               , curriculum_name
               , understanding_degrees
@@ -55,7 +55,7 @@ export class TrnAttendance {
             FROM
               trn_attendance
             WHERE user_id = $1
-            AND today = $2
+            AND year_month_day = $2
         `;
         const params: string[] = [
             userId,
@@ -82,7 +82,7 @@ export class TrnAttendance {
         await db.connect();
 
         const sql: string = `
-          INSERT INTO trn_attendance (user_id, today, attendance_time)
+          INSERT INTO trn_attendance (user_id, year_month_day, work_start_time)
           VALUES ($1, $2, $3);
         `;
         const params = [
@@ -111,10 +111,10 @@ export class TrnAttendance {
         const sql: string = `
             UPDATE trn_attendance
             SET 
-                leaving_time = $1
+                work_end_time = $1
               , daily_report = $2
             WHERE user_id = $3
-            AND today = $4
+            AND year_month_day = $4
         `;
         const params = [
             attendance.leavingTime,
@@ -141,10 +141,10 @@ export class TrnAttendance {
 
         const sql: string = `
           UPDATE trn_attendance
-          SET attendance_time = $1,
-              leaving_time    = $2
+          SET work_start_time = $1,
+              work_end_time    = $2
           WHERE user_id = $3
-            AND today = $4
+            AND year_month_day = $4
         `;
         const params = [
             attendance.attendanceTime,
