@@ -39,7 +39,6 @@ export function verifyIdToken(req, res, next) {
             next();
         })
         .catch(err => {
-            console.log(`検証失敗: ${err}`);
             console.error(err);
             next({
                 status: 403,
