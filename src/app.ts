@@ -37,6 +37,7 @@ class App {
 
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use('/user', userRoutes);
+        this.app.use('/trainee', userRoutes);
         this.app.use('/role', roleRoutes);
         this.app.use('/company', companyRoutes);
         this.app.use('/attendance', attendanceRoutes);
