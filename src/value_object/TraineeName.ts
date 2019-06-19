@@ -5,7 +5,7 @@
  */
 import { BaseValueObject } from "./BaseValueObject";
 
-export class UserName extends BaseValueObject {
+export class TraineeName extends BaseValueObject {
 
     private readonly _value: string;
     private readonly STRING_LENGTH = 64;
@@ -20,7 +20,7 @@ export class UserName extends BaseValueObject {
 
         if (this.isExceededDefaultLength(username)) {
             console.error('ユーザー名が既定の文字数を超過している。');
-            throw new Error('UserName is too long');
+            throw new Error('TraineeName is too long');
         }
 
         if (this.isIncludedIllegalCharacter(username)) {
