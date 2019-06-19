@@ -20,12 +20,12 @@ export class UserName extends BaseValueObject {
 
         if (this.isExceededDefaultLength(username)) {
             console.error('ユーザー名が既定の文字数を超過している。');
-            throw new Error('文字数超過');
+            throw new Error('UserName is too long');
         }
 
         if (this.isIncludedIllegalCharacter(username)) {
             console.error(`ユーザー名に禁則文字が含まれている。`);
-            throw new Error('禁則文字が含まれている');
+            throw new Error('Used illegal character');
         }
 
         this._value = username || '';
