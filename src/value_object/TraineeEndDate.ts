@@ -5,7 +5,12 @@ export class TraineeEndDate {
     private readonly _value: string;
     private readonly DATE_FORMAT = /(19[0-9]{2}|2[0-9]{3})-\d{2}-\d{2} 23:59:59/;
 
-    constructor(timestamp: string) {
+    constructor(timestamp: string | null | undefined) {
+
+        if (!timestamp) {
+            console.error('研修開始日の値がnullまたはundefined');
+            throw new Error('Passed value null or undefined');
+        }
 
         if (!this.isEndDateFormatValid(timestamp)) {
             console.error('日付の形式に誤りがある。');

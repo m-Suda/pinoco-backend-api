@@ -106,4 +106,13 @@ describe('研修開始日テスト', () => {
             });
         });
     });
+
+    describe('nullやundefinedが渡った時のテスト', () => {
+        test('null', () => {
+           expect(() => {new TraineeStartDate(null)}).toThrow();
+        });
+        test('undefined', () => {
+           expect(() => {new TraineeStartDate(undefined)}).toThrow();
+        });
+    });
 });
