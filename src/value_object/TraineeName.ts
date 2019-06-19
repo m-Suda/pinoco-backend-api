@@ -18,7 +18,7 @@ export class TraineeName extends BaseValueObject {
             return;
         }
 
-        if (this.isExceededDefaultLength(username)) {
+        if (this.isExceededDefaultLength(username, this.STRING_LENGTH)) {
             console.error('ユーザー名が既定の文字数を超過している。');
             throw new Error('TraineeName is too long');
         }
@@ -28,19 +28,11 @@ export class TraineeName extends BaseValueObject {
             throw new Error('Used illegal character');
         }
 
-        this._value = username || '';
+        this._value = username;
     }
 
     public get value() {
         return this._value;
     }
 
-    /**
-     * ユーザー名が既定の文字数を超えている。
-     * @param username
-     * @return boolean
-     */
-    private isExceededDefaultLength(username: string): boolean {
-        return username.length > this.STRING_LENGTH;
-    }
 }

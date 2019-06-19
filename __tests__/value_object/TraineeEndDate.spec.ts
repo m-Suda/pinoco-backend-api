@@ -115,4 +115,13 @@ describe('研修終了日テスト', () => {
             expect(() => {new TraineeEndDate(undefined)}).toThrow();
         });
     });
+
+    describe('半角スペースまたは全角スペースのみが渡った時のテスト', () => {
+        test('半角スペース', () => {
+            expect(() => {new TraineeEndDate(' ');}).toThrow();
+        });
+        test('全角スペース', () => {
+            expect(() => {new TraineeEndDate('　');}).toThrow();
+        });
+    });
 });
