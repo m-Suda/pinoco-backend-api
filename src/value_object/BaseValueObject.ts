@@ -16,7 +16,8 @@ export class BaseValueObject {
      * @param str
      */
     protected isHalfWidthSpaceOrFullWidthSpaceOnly(str: string) {
-        return str === ' ' || str === '　';
+        const stringRemovedSpaces = str.replace(/\s+/g, '');
+        return [...stringRemovedSpaces].length === 0;
     }
 
     /**

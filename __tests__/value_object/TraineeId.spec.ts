@@ -10,15 +10,6 @@ describe('研修受講者IDテスト', () => {
         });
         // このIDにはFirebase Authenticationのuidが入るので空チェックのみ行う。
         describe('異常', () => {
-            test('空文字', () => {
-                expect(() => {new TraineeId('');}).toThrow();
-            });
-            test('半角スペースのみ', () => {
-                expect(() => {new TraineeId('');}).toThrow();
-            });
-            test('全角スペースのみ', () => {
-                expect(() => {new TraineeId('');}).toThrow();
-            });
             test('null', () => {
                 expect(() => {new TraineeId(null);}).toThrow();
             });

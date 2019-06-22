@@ -2,44 +2,6 @@ import { CompanyId } from "../../src/value_object/CompanyId";
 
 describe('企業IDテスト', () => {
 
-    describe('文字数テスト', () => {
-        describe('正常', () => {
-            test('境界値 24文字', () => {
-                expect(() => {new CompanyId('companyIdcompanyIdcompan');}).not.toThrow();
-            });
-        });
-        describe('異常', () => {
-            test('境界値 25文字', () => {
-                expect(() => {new CompanyId('companyIdcompanyIdcompany');}).toThrow();
-            });
-        });
-    });
-
-    describe('必須テスト', () => {
-        describe('正常', () => {
-            test('成功', () => {
-                expect(() => {new CompanyId('company-id');}).not.toThrow();
-            });
-        });
-        describe('異常', () => {
-            test('空文字', () => {
-                expect(() => {new CompanyId('');}).toThrow();
-            });
-            test('半角スペースのみ', () => {
-                expect(() => {new CompanyId(' ');}).toThrow();
-            });
-            test('全角スペースのみ', () => {
-                expect(() => {new CompanyId('　');}).toThrow();
-            });
-            test('null', () => {
-                expect(() => {new CompanyId(null);}).toThrow();
-            });
-            test('undefined', () => {
-                expect(() => {new CompanyId(undefined);}).toThrow();
-            });
-        });
-    });
-
     describe('英数字一部記号テスト', () => {
         describe('正常', () => {
             test('英数字のみ使われている', () => {
@@ -66,5 +28,14 @@ describe('企業IDテスト', () => {
                 expect(() => {new CompanyId('<>/\\"\'%&|');}).toThrow();
             });
         });
+    });
+
+    describe('インスタンス化テスト', () => {
+       test('成功', () => {
+           expect(() => {new CompanyId('company');}).not.toThrow();
+       });
+       test('失敗', () => {
+           expect(() => {new CompanyId('');}).toThrow();
+       });
     });
 });

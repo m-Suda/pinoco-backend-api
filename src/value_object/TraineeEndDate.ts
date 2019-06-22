@@ -29,7 +29,7 @@ export class TraineeEndDate extends BaseValueObject {
             throw new Error('Date does not exist');
         }
 
-        this._value = moment(timestamp).format('YYYY-MM-DD HH:mm:ss');
+        this._value = timestamp;
     }
 
     public get value() {
