@@ -1,4 +1,4 @@
-import { mstUser } from "../../repository/mstUser";
+import { mstUser } from "../../repository/MstUser";
 import { User } from "../../models/User";
 import * as firebase from '../../firebase/firebaes';
 
