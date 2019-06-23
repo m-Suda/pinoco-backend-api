@@ -3,5 +3,5 @@
     "src"
   ],
   "ext": "ts",
-  "exec": "ts-node-dev -r dotenv/config ./src/server.ts"
+  "exec": "ts-node-dev -r dotenv/config ./src/infrastructure/server.ts"
 }

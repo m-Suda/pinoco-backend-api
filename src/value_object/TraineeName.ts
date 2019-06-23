@@ -1,10 +1,10 @@
+import { BaseValueObject } from "./BaseValueObject";
+
 /**
  * ユーザー名オブジェクト
  * stringまたはundefined, nullを許容。
  * undefined, nullの場合は空文字が入る。
  */
-import { BaseValueObject } from "./BaseValueObject";
-
 export class TraineeName extends BaseValueObject {
 
     private readonly _value: string;
