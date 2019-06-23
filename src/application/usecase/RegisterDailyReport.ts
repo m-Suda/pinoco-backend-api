@@ -11,8 +11,7 @@ export class RegisterDailyReport {
 
     public async execute(dailyReport: DailyReport) {
         try {
-            const registerDailyReport = await this.dailyReportRepository.register(dailyReport);
-            return registerDailyReport;
+            return await this.dailyReportRepository.register(dailyReport);
         } catch (e) {
             throw e;
         }

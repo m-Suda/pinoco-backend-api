@@ -18,15 +18,21 @@ import { ProgressDegrees } from "../../value_object/ProgressDegrees";
 import { FeedbackId } from "../../value_object/FeedbackId";
 import * as moment from "moment";
 import * as firebase from '../../infrastructure/firebase/firebaes';
+import { AttendancePresenter } from "../presenter/AttendancePresenter";
 
 export class AttendanceController {
 
     private readonly attendanceRepository: AttendanceRepository;
     private readonly dailyReportRepository: DailyReportRepository;
+    private readonly attendancePresenter: AttendancePresenter;
+
+    private readonly UNUSED_VALUE = '';
+    private readonly INITIAL_VALUE_OF_DEGREE = 3;
 
     constructor(db: IDBConnection) {
         this.attendanceRepository = new AttendanceRepository(db);
         this.dailyReportRepository = new DailyReportRepository(db);
+        this.attendancePresenter = new AttendancePresenter();
     }
 
     public async registerAttendanceTime(req: Request) {
@@ -37,11 +43,11 @@ export class AttendanceController {
                 new TraineeId(uid),
                 new YearMonthDay(yearMonthDay),
                 new WorkStartTime(workStartTime),
-                new WorkEndTime(workStartTime)
+                new WorkEndTime(this.UNUSED_VALUE)
             );
-            const registerAttendanceTime = new RegisterAttendanceTime(this.attendanceRepository);
-            const registerAttendanceTimeResult: Attendance = await registerAttendanceTime.execute(attendance);
-            return registerAttendanceTimeResult;
+            const useCase = new RegisterAttendanceTime(this.attendanceRepository);
+            const registerAttendanceTimeResult: Attendance = await useCase.execute(attendance);
+            return this.attendancePresenter.attendanceTimeConvert(registerAttendanceTimeResult);
         } catch (e) {
             throw e;
         }
@@ -54,7 +60,7 @@ export class AttendanceController {
             const attendance = new Attendance(
                 new TraineeId(uid),
                 new YearMonthDay(yearMonthDay),
-                new WorkStartTime(workEndTime),
+                new WorkStartTime(this.UNUSED_VALUE),
                 new WorkEndTime(workEndTime)
             );
             const registerLeavingTime = new RegisterLeavingTime(this.attendanceRepository);
@@ -65,15 +71,14 @@ export class AttendanceController {
                 new TraineeId(uid),
                 new YearMonthDay(yearMonthDay),
                 new Report(dailyReport),
-                new CurriculumName(''),
-                new UnderstandingDegrees(3),
-                new ProgressDegrees(3),
+                new CurriculumName(this.UNUSED_VALUE),
+                new UnderstandingDegrees(this.INITIAL_VALUE_OF_DEGREE),
+                new ProgressDegrees(this.INITIAL_VALUE_OF_DEGREE),
                 new FeedbackId(feedbackId)
             );
             const registerDailyReport = new RegisterDailyReport(this.dailyReportRepository);
-            const registerDailyReportResult = registerDailyReport.execute(daily);
-            // registerLeavingTimeResultとregisterDailyReportResultの組み合わせをpresenterを介して返却する。
-            return;
+            const registerDailyReportResult: DailyReport = await registerDailyReport.execute(daily);
+            return this.attendancePresenter.leavingTimeConvert(registerLeavingTimeResult, registerDailyReportResult);
         } catch (e) {
             throw e;
         }

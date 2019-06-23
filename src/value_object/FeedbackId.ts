@@ -9,8 +9,8 @@ export class FeedbackId extends BaseValueObject {
         super();
 
         if (!id) {
-            console.error('フィードバックIDの値がnullまたはundefined');
-            throw new Error('Passed value null or undefined');
+            this._value = '';
+            return;
         }
 
         if (!this.isValueFormatValid(id, this.YEAR_MONTH_DAY_FORMAT)) {

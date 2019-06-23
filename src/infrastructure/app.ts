@@ -1,6 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { attendanceRoutes } from "./routes/AttendanceRoutes";
+import { dailyReportRoutes } from "./routes/DailyReportRoutes";
 import * as firebase from './firebase/firebaes';
 
 class App {
@@ -33,6 +34,7 @@ class App {
 
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use('/attendance', attendanceRoutes);
+        this.app.use('/daily-report', dailyReportRoutes);
 
         this.app.use((err, req, res, next) => {
             res.status(err.status).send({ message: err.message });

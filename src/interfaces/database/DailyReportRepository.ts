@@ -1,6 +1,7 @@
 import { IDailyReportRepository } from "../../application/repositories/IDailyReportRepository";
 import { DailyReport } from "../../domain/models/DailyReport";
 import { IDBConnection } from "./IDBConnection";
+import { DBOperator } from "./DBOperator";
 
 export class DailyReportRepository extends IDailyReportRepository {
 
@@ -53,6 +54,42 @@ export class DailyReportRepository extends IDailyReportRepository {
 
     public async modify(dailyReport: DailyReport): Promise<DailyReport> {
         return dailyReport;
+    }
+
+    public async editLearningLevel(dailyReport: DailyReport, operator: DBOperator): Promise<DailyReport> {
+        await this.db.connect();
+        const sql = `
+            UPDATE  
+                trn_daily_report
+            SET
+                curriculum_name = $1
+              , understanding_degrees = $2
+              , progress_degrees = $3
+              , update_user = $4
+              , update_date = to_char(now(), 'YYYYMMDDHH24MISS')
+            WHERE 
+                trainee_id = $5
+            AND
+                year_month_day = $6
+        `;
+        const params = [
+            dailyReport.curriculumName.value,
+            dailyReport.understandingDegrees.value,
+            dailyReport.progressDegrees.value,
+            operator.uid,
+            dailyReport.traineeId.value,
+            dailyReport.yearMonthDay.value
+        ];
+
+        await this.db.begin();
+        try {
+            await this.db.execute(sql, params);
+            await this.db.commit();
+            return dailyReport;
+        } catch (e) {
+            await this.db.rollback();
+            throw e;
+        }
     }
 
 }

@@ -11,8 +11,7 @@ export class RegisterLeavingTime {
 
     public async execute(attendance: Attendance) {
         try {
-            const result = await this.attendanceRepository.leaving(attendance);
-            return result;
+            return await this.attendanceRepository.leaving(attendance);
         } catch (e) {
             throw e;
         }

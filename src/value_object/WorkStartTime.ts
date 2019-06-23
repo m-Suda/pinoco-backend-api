@@ -10,8 +10,8 @@ export class WorkStartTime extends BaseValueObject {
         super();
 
         if (!timestamp) {
-            console.error('作業開始時間の値がnullまたはundefined');
-            throw new Error('Passed value null or undefined');
+            this._value = '';
+            return;
         }
 
         if (this.isHalfWidthSpaceOrFullWidthSpaceOnly(timestamp)) {

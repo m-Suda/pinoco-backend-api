@@ -11,8 +11,7 @@ export class RegisterAttendanceTime {
 
     public async execute(attendance: Attendance) {
         try {
-            const registerAttendance = await this.attendanceRepository.arrival(attendance);
-            return registerAttendance;
+            return await this.attendanceRepository.arrival(attendance);
         } catch (e) {
             throw e;
         }
