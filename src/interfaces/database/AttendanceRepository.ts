@@ -41,9 +41,6 @@ export class AttendanceRepository extends IAttendanceRepository {
             await this.db.rollback();
             throw e;
         }
-        // finally {
-        //     await this.db.end();
-        // }
     }
 
     public async leaving(attendance: Attendance): Promise<Attendance> {
@@ -77,8 +74,5 @@ export class AttendanceRepository extends IAttendanceRepository {
             await this.db.rollback();
             throw e;
         }
-        // finally {
-        //     await this.db.end();
-        // }
     }
 }
