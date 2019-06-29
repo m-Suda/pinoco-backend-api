@@ -1,4 +1,4 @@
-import { BaseValueObject } from "./BaseValueObject";
+import { BaseValueObject } from "../BaseValueObject";
 
 /**
  * ユーザー名オブジェクト

@@ -1,39 +1,39 @@
-import { Feedback } from "../../src/value_object/Feedback";
+import { TechnicalFeedback } from "../../src/value_object/Feedback/TechnicalFeedback";
 
 describe('フィードバックテスト', () => {
     describe('改行コードは禁則文字に引っかからないテスト', () => {
         describe('正常', () => {
             test('CRLF', () => {
-                expect(() => {new Feedback('hoge\r\nhoge')}).not.toThrow();
+                expect(() => {new TechnicalFeedback('hoge\r\nhoge')}).not.toThrow();
             });
             test('CR', () => {
-                expect(() => {new Feedback('hoge\rhoge')}).not.toThrow();
+                expect(() => {new TechnicalFeedback('hoge\rhoge')}).not.toThrow();
             });
             test('LF', () => {
-                expect(() => {new Feedback('hoge\nhoge')}).not.toThrow();
+                expect(() => {new TechnicalFeedback('hoge\nhoge')}).not.toThrow();
             });
         });
         describe('これは引っかかる', () => {
             test('バックスラッシュ', () => {
-                expect(() => {new Feedback('hoge\\hoge')}).toThrow();
+                expect(() => {new TechnicalFeedback('hoge\\hoge')}).toThrow();
             });
             test('バックスラッシュ2つのあとにn', () => {
-                expect(() => {new Feedback('hoge\\nhoge')}).toThrow();
+                expect(() => {new TechnicalFeedback('hoge\\nhoge')}).toThrow();
             });
             test('エスケープバックスラッシュのあとに改行コード', () => {
-                expect(() => {new Feedback('hoge\\\nhoge')}).toThrow();
+                expect(() => {new TechnicalFeedback('hoge\\\nhoge')}).toThrow();
             });
         });
     });
     describe('nullまたはundefined', () => {
         test('null', () => {
-            expect(new Feedback(null).value).toBe('');
+            expect(new TechnicalFeedback(null).value).toBe('');
         });
         test('undefined', () => {
-            expect(new Feedback(undefined).value).toBe('');
+            expect(new TechnicalFeedback(undefined).value).toBe('');
         });
         test('文字あり', () => {
-            expect(new Feedback('フィードバックです').value).toBe('フィードバックです');
+            expect(new TechnicalFeedback('フィードバックです').value).toBe('フィードバックです');
         });
     });
 });

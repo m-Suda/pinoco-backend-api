@@ -1,4 +1,4 @@
-import { WorkEndTime } from "../../src/value_object/WorkEndTime";
+import { WorkEndTime } from "../../src/value_object/Attendance/WorkEndTime";
 
 describe('作業開始時間テスト', () => {
 
@@ -115,10 +115,16 @@ describe('作業開始時間テスト', () => {
 
     describe('nullやundefinedが渡った時のテスト', () => {
         test('null', () => {
-            expect(() => {new WorkEndTime(null)}).toThrow();
+            expect(() => {
+                const obj = new WorkEndTime(null);
+                return obj.value;
+            }).toBe('');
         });
         test('undefined', () => {
-            expect(() => {new WorkEndTime(undefined)}).toThrow();
+            expect(() => {
+                const obj = new WorkEndTime(undefined);
+                return obj.value;
+            }).toBe('');
         });
     });
 });

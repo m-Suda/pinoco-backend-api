@@ -1,4 +1,4 @@
-import { TraineeName } from "../../src/value_object/TraineeName";
+import { TraineeName } from "../../src/value_object/Trainee/TraineeName";
 
 describe('ユーザー名オブジェクトテスト', () => {
 

@@ -1,4 +1,4 @@
-import { ProgressDegrees } from "../../src/value_object/ProgressDegrees";
+import { ProgressDegrees } from "../../src/value_object/DailyReport/ProgressDegrees";
 
 describe('進捗度テスト', () => {
     describe('進捗度範囲', () => {

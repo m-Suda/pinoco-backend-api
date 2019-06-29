@@ -1,7 +1,7 @@
 import { TraineeId } from "../../value_object/TraineeId";
 import { YearMonthDay } from "../../value_object/YearMonthDay";
-import { WorkStartTime } from "../../value_object/WorkStartTime";
-import { WorkEndTime } from "../../value_object/WorkEndTime";
+import { WorkStartTime } from "../../value_object/Attendance/WorkStartTime";
+import { WorkEndTime } from "../../value_object/Attendance/WorkEndTime";
 
 export class Attendance {
 

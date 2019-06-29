@@ -19,16 +19,18 @@ export class FeedbackRepository extends IFeedbackRepository {
         const sql = `
             INSERT INTO 
                 trn_feedback (
-                    trainee_id, feedback_id, feedback
+                    trainee_id, feedback_id, technical_feedback, human_feedback, result_and_improvement
                   , create_user, create_date, update_user, update_date                          
                 ) VALUES (
-                    $1, $2, $3
-                  , $4, to_char(now(), 'YYYYMMDDHH24MISS'), $5, to_char(now(), 'YYYYMMDDHH24MISS')
+                    $1, $2, $3, $4, $5
+                  , $6, to_char(now(), 'YYYYMMDDHH24MISS'), $7, to_char(now(), 'YYYYMMDDHH24MISS')
                 );`;
         const params = [
             feedback.traineeId.value,
             feedback.feedbackId.value,
-            feedback.feedback.value,
+            feedback.technicalFeedback.value,
+            feedback.humanFeedback.value,
+            feedback.resultAndImprovement.value,
             operator.uid,
             operator.uid
         ];

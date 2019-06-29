@@ -16,7 +16,7 @@ export class AttendancePresenter {
             traineeId: leavingTimeResult.traineeId.value,
             yearMonthDay: leavingTimeResult.yearMonthDay.value,
             workEndTime: leavingTimeResult.workEndTime.value,
-            dailyReport: dailyReportResult.dailyReport.value,
+            report: dailyReportResult.report.value,
             feedbackId: dailyReportResult.feedbackId.value
         }
     }

@@ -6,7 +6,7 @@ export class FeedbackPresenter {
         return {
             traineeId: result.traineeId.value,
             feedbackId: result.feedbackId.value,
-            feedback: result.feedback.value
+            feedback: result.technicalFeedback.value
         };
     }
 }

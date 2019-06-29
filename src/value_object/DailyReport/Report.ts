@@ -1,6 +1,6 @@
-import { BaseValueObject } from "./BaseValueObject";
+import { BaseValueObject } from "../BaseValueObject";
 
-export class DailyReport extends BaseValueObject {
+export class Report extends BaseValueObject {
 
     private readonly _value: string;
 

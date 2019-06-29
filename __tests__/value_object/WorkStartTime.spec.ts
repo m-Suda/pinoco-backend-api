@@ -1,4 +1,4 @@
-import { WorkStartTime } from "../../src/value_object/WorkStartTime";
+import { WorkStartTime } from "../../src/value_object/Attendance/WorkStartTime";
 
 describe('作業開始時間テスト', () => {
 

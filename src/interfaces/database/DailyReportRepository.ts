@@ -18,7 +18,7 @@ export class DailyReportRepository extends IDailyReportRepository {
         const sql = `
             INSERT INTO
                 trn_daily_report(
-                    trainee_id, year_month_day, daily_report
+                    trainee_id, year_month_day, report
                   , curriculum_name, understanding_degrees, progress_degrees, feedback_id
                   , create_user, create_date, update_user, update_date                         
                 ) VALUES (
@@ -29,7 +29,7 @@ export class DailyReportRepository extends IDailyReportRepository {
         const params = [
             dailyReport.traineeId.value,
             dailyReport.yearMonthDay.value,
-            dailyReport.dailyReport.value,
+            dailyReport.report.value,
             dailyReport.curriculumName.value,
             dailyReport.understandingDegrees.value,
             dailyReport.progressDegrees.value,

@@ -1,4 +1,4 @@
-import { TraineeStartDate } from "../../src/value_object/TraineeStartDate";
+import { TraineeStartDate } from "../../src/value_object/Trainee/TraineeStartDate";
 
 describe('研修開始日テスト', () => {
 

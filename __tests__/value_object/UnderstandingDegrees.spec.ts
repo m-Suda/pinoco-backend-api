@@ -1,4 +1,4 @@
-import { UnderstandingDegrees } from "../../src/value_object/UnderstandingDegrees";
+import { UnderstandingDegrees } from "../../src/value_object/DailyReport/UnderstandingDegrees";
 
 describe('理解度テスト', () => {
     describe('理解度範囲', () => {

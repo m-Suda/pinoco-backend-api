@@ -1,6 +1,6 @@
-import { BaseValueObject } from "./BaseValueObject";
+import { BaseValueObject } from "../BaseValueObject";
 
-export class Feedback extends BaseValueObject {
+export class ResultAndImprovement extends BaseValueObject {
 
     private readonly _value: string;
 
@@ -13,7 +13,7 @@ export class Feedback extends BaseValueObject {
         }
 
         if (this.isIncludedIllegalCharacter(feedback)) {
-            console.error(`フィードバックに禁則文字が含まれている。`);
+            console.error(`ヒューマンフィードバックに禁則文字が含まれている。`);
             throw new Error('Used illegal character');
         }
 
