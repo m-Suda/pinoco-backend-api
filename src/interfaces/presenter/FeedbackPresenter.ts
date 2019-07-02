@@ -14,13 +14,16 @@ export class FeedbackPresenter {
     public weeklyReportConvert(result: Array<WeeklyReport>) {
         const dailyReports = result.map(report => this.toReportObject(report));
         const feedback = {
-            technicalFeedback: result[0].technical_feedback || '',
-            humanFeedback: result[0].human_feedback || '',
-            resultAndImprovement: result[0].result_and_improvement || ''
+            technicalFeedback: result[0].technical_feedback,
+            humanFeedback: result[0].human_feedback,
+            resultAndImprovement: result[0].result_and_improvement
         };
         return {
-            traineeId: result[0].trainee_id || '',
-            feedbackId: result[0].feedback_id || '',
+            traineeId: result[0].trainee_id,
+            traineeName: result[0].trainee_name,
+            companyId: result[0].company_id,
+            companyName: result[0].company_name,
+            feedbackId: result[0].feedback_id,
             dailyReports,
             feedback
         };

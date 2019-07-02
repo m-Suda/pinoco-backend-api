@@ -56,8 +56,11 @@ export class FeedbackRepository extends IFeedbackRepository {
         const sql = `
             SELECT
                 report.trainee_id
+              , trainee_name
+              , trainee.company_id
+              , company_name
               , report.feedback_id
-              , to_char(year_month_day, 'YYYY-MM-DD HH24:MI:SS') as year_month_day
+              , to_char(year_month_day, 'YYYY-MM-DD') as year_month_day
               , report
               , curriculum_name
               , understanding_degrees
@@ -72,18 +75,20 @@ export class FeedbackRepository extends IFeedbackRepository {
                 ON feedback.feedback_id = report.feedback_id
                 AND feedback.trainee_id = $1
                 AND feedback.feedback_id = $2
+            LEFT JOIN 
+                mst_trainee as trainee
+                ON trainee.trainee_id = report.trainee_id
+                AND trainee.trainee_id = $1
+            LEFT JOIN 
+                mst_company as company
+                ON trainee.company_id = company.company_id
             WHERE 
-                report.trainee_id = $3
+                report.trainee_id = $1
             AND
-                report.feedback_id = $4
+                report.feedback_id = $2
             ORDER BY year_month_day ASC;
         `;
-        const params = [
-            traineeId.value,
-            feedbackId.value,
-            traineeId.value,
-            feedbackId.value
-        ];
+        const params = [traineeId.value, feedbackId.value];
 
         try {
             return await this.db.execute(sql, params);
