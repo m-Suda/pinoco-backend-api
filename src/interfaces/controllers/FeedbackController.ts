@@ -11,6 +11,8 @@ import { RegisterFeedback } from "../../application/usecase/RegisterFeedback";
 import { FeedbackPresenter } from "../presenter/FeedbackPresenter";
 import { HumanFeedback } from "../../value_object/Feedback/HumanFeedback";
 import { ResultAndImprovement } from "../../value_object/Feedback/ResultAndImprovement";
+import { FetchWeeklyReport } from "../../application/usecase/FetchWeeklyReport";
+import { WeeklyReport } from "../../types/WeeklyReport";
 
 export class FeedbackController {
 
@@ -37,6 +39,17 @@ export class FeedbackController {
             const useCase = new RegisterFeedback(this.feedbackRepository);
             const result: Feedback = await useCase.execute(theTraineeFeedback, operator);
             return this.feedbackPresenter.feedbackConvert(result);
+        } catch (e) {
+            throw e;
+        }
+    }
+
+    public async fetchWeeklyReport(req: Request) {
+        try {
+            const {traineeId, feedbackId} = req.params;
+            const useCase = new FetchWeeklyReport(this.feedbackRepository);
+            const result: Array<WeeklyReport> = await useCase.execute(new TraineeId(traineeId), new FeedbackId(feedbackId));
+            return this.feedbackPresenter.weeklyReportConvert(result);
         } catch (e) {
             throw e;
         }

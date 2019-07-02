@@ -2,6 +2,9 @@ import { IFeedbackRepository } from "../../application/repositories/IFeedbackRep
 import { IDBConnection } from "./IDBConnection";
 import { Feedback } from "../../domain/models/Feedback";
 import { DBOperator } from "./DBOperator";
+import { TraineeId } from "../../value_object/TraineeId";
+import { FeedbackId } from "../../value_object/FeedbackId";
+import { WeeklyReport } from "../../types/WeeklyReport";
 
 export class FeedbackRepository extends IFeedbackRepository {
 
@@ -46,4 +49,46 @@ export class FeedbackRepository extends IFeedbackRepository {
         }
     }
 
+    async fetchWeeklyReport(traineeId: TraineeId, feedbackId: FeedbackId): Promise<Array<WeeklyReport>> {
+
+        await this.db.connect();
+
+        const sql = `
+            SELECT
+                report.trainee_id
+              , report.feedback_id
+              , to_char(year_month_day, 'YYYY-MM-DD HH24:MI:SS') as year_month_day
+              , report
+              , curriculum_name
+              , understanding_degrees
+              , progress_degrees
+              , technical_feedback
+              , human_feedback
+              , result_and_improvement
+            FROM
+                trn_daily_report as report
+            LEFT JOIN 
+                trn_feedback as feedback
+                ON feedback.feedback_id = report.feedback_id
+                AND feedback.trainee_id = $1
+                AND feedback.feedback_id = $2
+            WHERE 
+                report.trainee_id = $3
+            AND
+                report.feedback_id = $4
+            ORDER BY year_month_day ASC;
+        `;
+        const params = [
+            traineeId.value,
+            feedbackId.value,
+            traineeId.value,
+            feedbackId.value
+        ];
+
+        try {
+            return await this.db.execute(sql, params);
+        } catch (e) {
+            throw e;
+        }
+    }
 }

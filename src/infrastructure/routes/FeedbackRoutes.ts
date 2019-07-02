@@ -14,6 +14,17 @@ class FeedbackRoutes {
     }
 
     private config(): void {
+        this.router.get('/weekly/:traineeId/:feedbackId', async (req: express.Request, res: express.Response) => {
+            try {
+                const result = await this.controller.fetchWeeklyReport(req);
+                res.status(200).send(result);
+            } catch (e) {
+                console.error(e);
+                res.status(500).send({
+                    message: e.message
+                });
+            }
+        });
         this.router.post('/', async (req: express.Request, res: express.Response) => {
             try {
                 const result = await this.controller.registerFeedback(req);
